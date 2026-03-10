@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ramyaa's Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<!-- Plant favicon -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪴</text></svg>">
+<style>
+  :root {
+    --bg: #ebe8e2;
+    --surface: #f5f3ef;
+    --yellow: #e8c84a;
+    --blue: #8ab4c9;
+    --green: #8fa87a;
+    --pink: #d98080;
+    --tan: #c8b89a;
+    --purple: #a898c0;
+    --text: #2a2825;
+    --muted: #9a9590;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .page {
+    width: 100vw; height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    z-index: 20;
+  }
+
+  .site-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    letter-spacing: -0.2px;
+  }
+  .site-name em { font-style: italic; color: var(--muted); }
+
+  .site-links {
+    display: flex; gap: 22px;
+    font-size: 11.5px; color: var(--muted); font-weight: 300;
+  }
+  .site-links a { color: inherit; text-decoration: none; transition: color 0.2s; }
+  .site-links a:hover { color: var(--text); }
+
+  /* ══════════════════════════
+     SCREEN INTERIOR
+  ══════════════════════════ */
+  .screen-inner {
+    width: 100%; height: 100%;
+    position: relative;
+    background: linear-gradient(140deg, #2c5470 0%, #3d7a9e 38%, #5fa8cb 70%, #4a8aad 100%);
+    overflow: hidden;
+  }
+
+  .screen-inner::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/feSVG%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 1;
+  }
+
+  /* ── HERO TEXT ── */
+  .wp-hero {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+    z-index: 2;
+    white-space: nowrap;
+  }
+
+  .wp-hero h1 {
+    font-family: 'DM Serif Display', serif;
+    color: rgba(255,255,255,0.82);
+    line-height: 1.0;
+    letter-spacing: -1px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+  }
+
+  .wp-sub {
+    color: rgba(255,255,255,0.48);
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+
+  /* ── DESKTOP ICONS (iMac — absolute scatter) ── */
+  .desktop-icons {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .fi {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    pointer-events: all;
+    transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
+    user-select: none;
+  }
+
+  .fi:hover { transform: scale(1.14) translateY(-4px); }
+  .fi svg { display: block; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.22)); }
+
+  .fi-name {
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.92);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.55);
+    text-align: center;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+    background: rgba(0,0,0,0.2);
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+
+  /* ── TABLET/PHONE FOLDER ROWS ── */
+  /* Wraps top row + hero + bottom row in a column */
+  .screen-layout {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 3;
+    padding-top: 36px; /* clear the dynamic island on phone */
+  }
+
+  .folder-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .hero-zone {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    pointer-events: none;
+    max-height: 55%;
+  }
+
+  .hero-zone h1 {
+    font-family: 'DM Serif Display', serif;
+    color: rgba(255,255,255,0.82);
+    line-height: 1.05;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+  }
+
+  .hero-zone .sub {
+    color: rgba(255,255,255,0.48);
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  /* folder item inside rows */
+  .rfi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    pointer-events: all;
+    transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
+    user-select: none;
+  }
+
+  .rfi:hover { transform: scale(1.12) translateY(-3px); }
+  .rfi svg { display: block; filter: drop-shadow(0 3px 8px rgba(0,0,0,0.22)); }
+
+  .rfi-name {
+    font-size: 9px;
+    color: rgba(255,255,255,0.92);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.55);
+    text-align: center;
+    font-weight: 400;
+    white-space: nowrap;
+    background: rgba(0,0,0,0.22);
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+
+  /* ══════════════════════════
+     iMAC DEVICE
+  ══════════════════════════ */
+  .device-imac {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* The whole imac unit: frame + sticky + stand */
+  .imac-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .imac-frame {
+    background: #1d1b19;
+    border-radius: 18px;
+    padding: 12px 12px 8px;
+    box-shadow:
+      0 55px 110px rgba(0,0,0,0.3),
+      0 0 0 1px rgba(255,255,255,0.04),
+      inset 0 1px 0 rgba(255,255,255,0.06);
+    position: relative;
+  }
+
+  .imac-screen-wrap {
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .imac-chin {
+    height: 26px; background: #252220;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 0 0  5px 5px; margin-top: 2px;
+  }
+
+  .imac-chin span {
+    display: block; width: 6px; height: 6px;
+    border-radius: 50%; background: rgba(255,255,255,0.1);
+  }
+
+  /* Sticky note sits ON the chin/base area of the laptop, outside the screen */
+  .sticky-note {
+    position: absolute;
+    background: var(--yellow);
+    border-radius: 2px;
+    box-shadow: 3px 5px 18px rgba(0,0,0,0.28), 0 1px 0 rgba(255,255,255,0.35) inset;
+    cursor: pointer;
+    transform: rotate(2.5deg);
+    transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s;
+    z-index: 10;
+    /* proper sticky note square — wide enough for email on one line */
+    width: 148px;
+    height: 148px;
+    padding: 11px 13px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .sticky-note:hover {
+    transform: rotate(0deg) scale(1.07);
+    box-shadow: 5px 8px 26px rgba(0,0,0,0.32);
+  }
+
+  .sn-title {
+    font-size: 13px; font-weight: 700;
+    font-family: 'Caveat', cursive;
+    color: #1a1410;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+  }
+
+  .sn-body {
+    font-size: 12px; line-height: 1.65;
+    color: #2a2018; font-weight: 700;
+    font-family: 'Caveat', cursive;
+    white-space: nowrap;
+    letter-spacing: 0.2px;
+  }
+
+  .imac-neck {
+    width: 52px; height: 30px;
+    background: linear-gradient(180deg, #cdc8c2 0%, #bdb8b2 100%);
+    clip-path: polygon(14% 0%, 86% 0%, 96% 100%, 4% 100%);
+  }
+
+  .imac-foot {
+    width: 124px; height: 11px;
+    background: linear-gradient(180deg, #c5c0b9 0%, #b5b0a9 100%);
+    border-radius: 0 0 7px 7px; margin-top: -1px;
+  }
+
+  /* ══════════════════════════
+     iPAD DEVICE
+  ══════════════════════════ */
+  .device-ipad {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ipad-frame {
+    background: #1d1b19;
+    border-radius: 26px;
+    padding: 16px 14px;
+    box-shadow:
+      0 44px 88px rgba(0,0,0,0.32),
+      0 0 0 1px rgba(255,255,255,0.04);
+    position: relative;
+  }
+
+  .ipad-frame::before {
+    content: '';
+    position: absolute;
+    right: -4px; top: 50%;
+    transform: translateY(-50%);
+    width: 4px; height: 48px;
+    background: #2a2824;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .ipad-screen-wrap {
+    border-radius: 12px;
+    overflow: hidden; position: relative;
+  }
+
+  .ipad-home {
+    width: 90px; height: 4px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 2px; margin: 11px auto 0;
+  }
+
+  /* ══════════════════════════
+     PHONE DEVICE
+  ══════════════════════════ */
+  .device-phone {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .phone-frame {
+    background: #1d1b19;
+    border-radius: 44px;
+    padding: 14px 12px;
+    box-shadow:
+      0 36px 72px rgba(0,0,0,0.36),
+      0 0 0 1px rgba(255,255,255,0.04);
+    position: relative;
+  }
+
+  .phone-island {
+    position: absolute;
+    top: 16px; left: 50%; transform: translateX(-50%);
+    width: 84px; height: 26px;
+    background: #1d1b19;
+    border-radius: 0 0 18px 18px;
+    z-index: 10;
+  }
+
+  .phone-screen-wrap {
+    border-radius: 32px;
+    overflow: hidden; position: relative;
+  }
+
+  .phone-home {
+    width: 78px; height: 4px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 2px; margin: 11px auto 0;
+  }
+
+  /* ══════════════════════════
+     MINIMAL FALLBACK
+  ══════════════════════════ */
+  .device-minimal {
+    display: none;
+    width: 100vw; height: 100vh;
+    overflow-y: auto;
+    padding: 28px 18px 50px;
+  }
+
+  .mf-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px; margin-bottom: 4px;
+  }
+
+  .mf-tagline {
+    font-size: 12px; color: var(--muted);
+    font-weight: 300; margin-bottom: 32px;
+  }
+
+  .mf-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .mf-tile {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 18px 15px;
+    cursor: pointer;
+    border: 1px solid rgba(42,40,37,0.06);
+    transition: transform 0.18s;
+  }
+
+  .mf-tile:hover { transform: scale(1.02); }
+  .mf-tile svg { display: block; margin-bottom: 10px; }
+  .mf-tile-name { font-size: 13px; font-weight: 500; }
+  .mf-tile-ext { font-size: 11px; color: var(--muted); }
+
+  /* ══════════════════════════
+     FOOTER (tablet + phone)
+  ══════════════════════════ */
+  .page-footer {
+    display: none;
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 11px 24px;
+    background: rgba(235,232,226,0.92);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(42,40,37,0.07);
+    z-index: 30;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .footer-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 13px;
+  }
+
+  .footer-links {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    font-size: 11px; color: var(--muted); font-weight: 300;
+  }
+
+  .footer-links a { color: inherit; text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text); }
+
+  /* ══════════════════════════
+     POPUP BOOK
+  ══════════════════════════ */
+  .overlay {
+    position: fixed; inset: 0;
+    background: rgba(25,20,15,0.45);
+    backdrop-filter: blur(12px);
+    z-index: 300;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.24s;
+  }
+
+  .overlay.open { opacity: 1; pointer-events: all; }
+
+  .book {
+    background: var(--surface);
+    border-radius: 22px;
+    box-shadow: 0 44px 100px rgba(0,0,0,0.3), 0 0 0 1px rgba(42,40,37,0.05);
+    width: min(660px, 92vw);
+    max-height: 76vh;
+    overflow-y: auto;
+    transform: scale(0.88) translateY(18px);
+    transition: transform 0.34s cubic-bezier(0.34,1.4,0.64,1);
+  }
+
+  .overlay.open .book { transform: scale(1) translateY(0); }
+
+  .bk-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 26px;
+    border-bottom: 1px solid rgba(42,40,37,0.07);
+    position: sticky; top: 0;
+    background: var(--surface);
+    border-radius: 22px 22px 0 0; z-index: 2;
+  }
+
+  .bk-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .bk-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+  .bk-close {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: rgba(42,40,37,0.08); border: none;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: var(--muted);
+    transition: background 0.14s;
+  }
+
+  .bk-close:hover { background: rgba(42,40,37,0.15); color: var(--text); }
+
+  .bk-body { padding: 26px; }
+
+  .entry {
+    margin-bottom: 24px; padding-bottom: 24px;
+    border-bottom: 1px solid rgba(42,40,37,0.06);
+  }
+
+  .entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .e-head {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 14px; margin-bottom: 6px;
+  }
+
+  .e-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px; line-height: 1.3;
+  }
+
+  .e-date { font-size: 11px; color: var(--muted); white-space: nowrap; margin-top: 3px; }
+  .e-sub { font-size: 12.5px; color: var(--muted); margin-bottom: 8px; }
+
+  .e-body { font-size: 13px; line-height: 1.72; color: #4a4845; font-weight: 300; }
+  .e-body ul { list-style: none; padding: 0; margin-top: 6px; }
+  .e-body ul li { padding: 3px 0 3px 16px; position: relative; }
+  .e-body ul li::before { content: '—'; position: absolute; left: 0; color: var(--muted); font-size: 10px; top: 6px; }
+
+  .tag {
+    display: inline-block;
+    background: rgba(42,40,37,0.06);
+    border-radius: 20px; padding: 4px 10px;
+    font-size: 11.5px; margin: 3px 2px 3px 0;
+  }
+
+  .tags { margin-top: 10px; }
+
+  .book::-webkit-scrollbar { width: 3px; }
+  .book::-webkit-scrollbar-thumb { background: rgba(42,40,37,0.12); border-radius: 3px; }
+
+  /* ══════════════════════════
+     RESPONSIVE BREAKPOINTS
+  ══════════════════════════ */
+  @media (max-width: 1024px) and (min-width: 601px) {
+    .device-imac { display: none; }
+    .device-ipad { display: flex; }
+    .site-header { padding: 16px 24px; }
+    .page-footer { display: flex; }
+  }
+
+  @media (max-width: 600px) and (min-width: 360px) {
+    .device-imac { display: none; }
+    .device-phone { display: flex; }
+    .site-header { padding: 14px 18px; }
+    .site-links { display: none; }
+    .page-footer { display: flex; }
+  }
+
+  @media (max-width: 359px) {
+    .device-imac, .device-ipad, .device-phone { display: none; }
+    .device-minimal { display: block; }
+    .site-header { display: none; }
+    html, body { overflow: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="site-header">
+    <div class="site-name">Ramyaa <em>Prasath</em></div>
+    <div class="site-links">
+      <a href="mailto:ramyaaprasath13@gmail.com">Email</a>
+      <a href="https://linkedin.com/in/ramyaaprasath" target="_blank">LinkedIn</a>
+      <a href="https://figma.com/@ramyaaprasath" target="_blank">Figma</a>
+    </div>
+  </header>
+
+  <!-- ════════ iMAC ════════ -->
+  <div class="device-imac" id="devImac">
+    <!-- imac-unit wraps frame + sticky so sticky can be positioned relative to the whole unit -->
+    <div class="imac-unit" id="imacUnit">
+      <div class="imac-frame" id="imacFrame">
+        <div class="imac-screen-wrap" id="imacWrap">
+          <div class="screen-inner">
+            <!-- Hero -->
+            <div class="wp-hero" id="imacHero">
+              <h1 id="imacH1">Ramyaa Prasath</h1>
+              <div class="wp-sub" id="imacSub">Systems Engineer &amp; Designer &nbsp;·&nbsp; NY/NJ</div>
+            </div>
+            <!-- Scattered folders -->
+            <div class="desktop-icons" id="imacIcons">
+              <div class="fi" onclick="openBook('experience')">
+                <svg width="52" height="42" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#e8c84a"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#f2dc6a"/></svg>
+                <span class="fi-name">experience.work</span>
+              </div>
+              <div class="fi" onclick="openBook('education')">
+                <svg width="52" height="42" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#8ab4c9"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#a4cce0"/></svg>
+                <span class="fi-name">education.2025</span>
+              </div>
+              <div class="fi" onclick="openBook('skills')">
+                <svg width="52" height="42" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#8fa87a"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#a2bc8e"/></svg>
+                <span class="fi-name">skills.stack</span>
+              </div>
+              <div class="fi" onclick="openBook('projects')">
+                <svg width="52" height="42" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#d98080"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#eb9898"/></svg>
+                <span class="fi-name">projects.folder</span>
+              </div>
+              <div class="fi" onclick="openBook('involvement')">
+                <svg width="52" height="42" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#c8b89a"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#daccb0"/></svg>
+                <span class="fi-name">involvement.extras</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="imac-chin"><span></span></div>
+      </div>
+      <!-- Sticky note positioned on the chin/foot area, NOT on the screen -->
+      <div class="sticky-note" id="imacSticky" onclick="openBook('contact')">
+        <div class="sn-title">Contact</div>
+        <div class="sn-body">
+          ramyaaprasath13@gmail.com<br>
+          917-940-6958<br>
+          NY / NJ
+        </div>
+      </div>
+      <div class="imac-neck"></div>
+      <div class="imac-foot"></div>
+    </div>
+  </div>
+
+  <!-- ════════ iPAD ════════ -->
+  <div class="device-ipad" id="devIpad">
+    <div class="ipad-frame">
+      <div class="ipad-screen-wrap" id="ipadWrap">
+        <div class="screen-inner">
+          <!-- Top row: 3 folders -->
+          <div class="screen-layout" id="ipadLayout">
+            <div class="folder-row" id="ipadTopRow" style="padding: 0 20px;">
+              <div class="rfi" onclick="openBook('experience')">
+                <svg width="44" height="35" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#e8c84a"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#f2dc6a"/></svg>
+                <span class="rfi-name">experience</span>
+              </div>
+              <div class="rfi" onclick="openBook('education')">
+                <svg width="44" height="35" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#8ab4c9"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#a4cce0"/></svg>
+                <span class="rfi-name">education</span>
+              </div>
+              <div class="rfi" onclick="openBook('skills')">
+                <svg width="44" height="35" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#8fa87a"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#a2bc8e"/></svg>
+                <span class="rfi-name">skills</span>
+              </div>
+            </div>
+            <!-- Hero center -->
+            <div class="hero-zone">
+              <div>
+                <h1 id="ipadH1">Ramyaa Prasath</h1>
+                <div class="sub" id="ipadSub">Systems Engineer &amp; Designer</div>
+              </div>
+            </div>
+            <!-- Bottom row: 3 folders -->
+            <div class="folder-row" id="ipadBotRow" style="padding: 0 20px;">
+              <div class="rfi" onclick="openBook('projects')">
+                <svg width="44" height="35" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#d98080"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#eb9898"/></svg>
+                <span class="rfi-name">projects</span>
+              </div>
+              <div class="rfi" onclick="openBook('involvement')">
+                <svg width="44" height="35" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#c8b89a"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#daccb0"/></svg>
+                <span class="rfi-name">involvement</span>
+              </div>
+              <div class="rfi" onclick="openBook('contact')">
+                <svg width="44" height="35" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#a898c0"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#baaed4"/></svg>
+                <span class="rfi-name">contact</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ipad-home"></div>
+  </div>
+
+  <!-- ════════ PHONE ════════ -->
+  <div class="device-phone" id="devPhone">
+    <div class="phone-frame">
+      <div class="phone-island"></div>
+      <div class="phone-screen-wrap" id="phoneWrap">
+        <div class="screen-inner" id="phoneScreen">
+          <div class="screen-layout">
+            <!-- Top row: 3 folders -->
+            <div class="folder-row" id="phoneTopRow" style="padding: 0 12px;">
+              <div class="rfi" onclick="openBook('experience')">
+                <svg width="34" height="27" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#e8c84a"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#f2dc6a"/></svg>
+                <span class="rfi-name">experience</span>
+              </div>
+              <div class="rfi" onclick="openBook('education')">
+                <svg width="34" height="27" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#8ab4c9"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#a4cce0"/></svg>
+                <span class="rfi-name">education</span>
+              </div>
+              <div class="rfi" onclick="openBook('skills')">
+                <svg width="34" height="27" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#8fa87a"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#a2bc8e"/></svg>
+                <span class="rfi-name">skills</span>
+              </div>
+            </div>
+            <!-- Hero center -->
+            <div class="hero-zone">
+              <div>
+                <h1 id="phoneH1" style="white-space:nowrap;">Ramyaa<br>Prasath</h1>
+                <div class="sub" id="phoneSub" style="font-size:9px;letter-spacing:1.5px;">Engineer &amp; Designer</div>
+              </div>
+            </div>
+            <!-- Bottom row: 3 folders -->
+            <div class="folder-row" id="phoneBotRow" style="padding: 0 12px;">
+              <div class="rfi" onclick="openBook('projects')">
+                <svg width="34" height="27" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#d98080"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#eb9898"/></svg>
+                <span class="rfi-name">projects</span>
+              </div>
+              <div class="rfi" onclick="openBook('involvement')">
+                <svg width="34" height="27" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#c8b89a"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#daccb0"/></svg>
+                <span class="rfi-name">involvement</span>
+              </div>
+              <div class="rfi" onclick="openBook('contact')">
+                <svg width="34" height="27" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#a898c0"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#baaed4"/></svg>
+                <span class="rfi-name">contact</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-home"></div>
+  </div>
+
+  <!-- ════════ MINIMAL ════════ -->
+  <div class="device-minimal">
+    <div class="mf-name">Ramyaa Prasath</div>
+    <div class="mf-tagline">Systems Engineer &amp; Designer · NY/NJ</div>
+    <div class="mf-grid">
+      <div class="mf-tile" onclick="openBook('experience')">
+        <svg width="50" height="40" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#e8c84a"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#f2dc6a"/></svg>
+        <div class="mf-tile-name">Experience</div><div class="mf-tile-ext">.work</div>
+      </div>
+      <div class="mf-tile" onclick="openBook('education')">
+        <svg width="50" height="40" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#8ab4c9"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#a4cce0"/></svg>
+        <div class="mf-tile-name">Education</div><div class="mf-tile-ext">.2025</div>
+      </div>
+      <div class="mf-tile" onclick="openBook('skills')">
+        <svg width="50" height="40" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#8fa87a"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#a2bc8e"/></svg>
+        <div class="mf-tile-name">Skills</div><div class="mf-tile-ext">.stack</div>
+      </div>
+      <div class="mf-tile" onclick="openBook('projects')">
+        <svg width="50" height="40" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#d98080"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#eb9898"/></svg>
+        <div class="mf-tile-name">Projects</div><div class="mf-tile-ext">.folder</div>
+      </div>
+      <div class="mf-tile" onclick="openBook('involvement')">
+        <svg width="50" height="40" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#c8b89a"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#daccb0"/></svg>
+        <div class="mf-tile-name">Involvement</div><div class="mf-tile-ext">.extras</div>
+      </div>
+      <div class="mf-tile" onclick="openBook('contact')">
+        <svg width="50" height="40" viewBox="0 0 76 60"><path d="M4 14Q4 8 10 8H28L34 14H66Q72 14 72 20V50Q72 56 66 56H10Q4 56 4 50Z" fill="#a898c0"/><path d="M4 20H72V50Q72 56 66 56H10Q4 56 4 50Z" fill="#baaed4"/></svg>
+        <div class="mf-tile-name">Contact</div><div class="mf-tile-ext">.png</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER (tablet + phone) -->
+  <footer class="page-footer">
+    <div class="footer-name">🪴 Ramyaa Prasath</div>
+    <div class="footer-links">
+      <a href="mailto:ramyaaprasath13@gmail.com">ramyaaprasath13@gmail.com</a>
+      <a href="tel:9179406958">917-940-6958</a>
+      <a href="https://linkedin.com/in/ramyaaprasath" target="_blank">LinkedIn</a>
+      <a href="https://figma.com/@ramyaaprasath" target="_blank">Figma</a>
+      <span style="color:var(--muted)">NY / NJ</span>
+    </div>
+  </footer>
+
+</div><!-- /page -->
+
+<!-- POPUP BOOK -->
+<div class="overlay" id="overlay" onclick="bgClose(event)">
+  <div class="book" onclick="event.stopPropagation()">
+    <div class="bk-head">
+      <div class="bk-title">
+        <span class="bk-dot" id="bkDot"></span>
+        <span id="bkTitle"></span>
+      </div>
+      <button class="bk-close" onclick="closeBook()">✕</button>
+    </div>
+    <div class="bk-body" id="bkBody"></div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────
+//  SIZE + LAYOUT ENGINE
+// ─────────────────────────────────
+function layout() {
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  // ── iMac ──
+  if (vw > 1024) {
+    const avW = Math.min(vw * 0.80, 860);
+    const avH = vh - 140;
+    let sw = Math.min(avW, avH * 1.6);
+    let sh = sw / 1.6;
+    if (sh > avH) { sh = avH; sw = sh * 1.6; }
+
+    const wrap = document.getElementById('imacWrap');
+    if (wrap) { wrap.style.width = sw + 'px'; wrap.style.height = sh + 'px'; }
+
+    const h1 = document.getElementById('imacH1');
+    if (h1) h1.style.fontSize = Math.max(22, sw * 0.072) + 'px';
+    const sub = document.getElementById('imacSub');
+    if (sub) sub.style.fontSize = Math.max(9, sw * 0.018) + 'px';
+
+    // Sticky note position
+    const sticky = document.getElementById('imacSticky');
+    if (sticky) {
+      sticky.style.bottom = '34px';
+      sticky.style.right = '-10px';
+    }
+
+    scatterDesktop('imacIcons', sw, sh);
+  }
+
+  // ── iPad — just size the screen, CSS flexbox handles layout ──
+  if (vw >= 601 && vw <= 1024) {
+    const footerH = 50;
+    const avH = Math.min(vh - 100 - footerH, 580);
+    const sh = avH * 0.9;
+    const sw = sh * 0.76;
+    const wrap = document.getElementById('ipadWrap');
+    if (wrap) { wrap.style.width = sw + 'px'; wrap.style.height = sh + 'px'; }
+
+    // font sizes relative to screen width
+    const h1 = document.getElementById('ipadH1');
+    if (h1) h1.style.fontSize = Math.max(16, sw * 0.1) + 'px';
+    const sub = document.getElementById('ipadSub');
+    if (sub) sub.style.fontSize = Math.max(8, sw * 0.021) + 'px';
+
+    // row padding proportional to screen height
+    const rowPad = Math.max(14, sh * 0.05) + 'px 20px';
+    const topRow = document.getElementById('ipadTopRow');
+    const botRow = document.getElementById('ipadBotRow');
+    if (topRow) topRow.style.padding = rowPad;
+    if (botRow) botRow.style.padding = rowPad;
+  }
+
+  // ── Phone — just size the screen, CSS flexbox handles layout ──
+  if (vw >= 360 && vw <= 600) {
+    const footerH = 52;
+    const avH = vh - footerH - 40;
+    const sh = Math.min(avH * 0.94, 620);
+    const sw = Math.min(sh * (9/19.5), vw - 56);
+    const wrap = document.getElementById('phoneWrap');
+    if (wrap) { wrap.style.width = sw + 'px'; wrap.style.height = sh + 'px'; }
+
+    const h1 = document.getElementById('phoneH1');
+    if (h1) h1.style.fontSize = Math.max(20, sw * 0.16) + 'px';
+    const sub = document.getElementById('phoneSub');
+    if (sub) sub.style.fontSize = Math.max(8, sw * 0.022) + 'px';
+
+    const rowPad = Math.max(8, sh * 0.025) + 'px 12px';
+    const topRow = document.getElementById('phoneTopRow');
+    const botRow = document.getElementById('phoneBotRow');
+    if (topRow) topRow.style.padding = rowPad;
+    if (botRow) botRow.style.padding = rowPad;
+  }
+}
+
+// Scatter 5 folders on a desktop screen, staying away from center hero
+function scatterDesktop(id, sw, sh) {
+  const container = document.getElementById(id);
+  if (!container) return;
+  const icons = container.querySelectorAll('.fi');
+  // Hero exclusion: center sw*0.45 x sh*0.35
+  // 5 hand-tuned positions as fractions, in corners and sides
+  const slots = [
+    { x: 0.04, y: 0.06 },   // top-left
+    { x: 0.76, y: 0.05 },   // top-right
+    { x: 0.03, y: 0.60 },   // mid-left
+    { x: 0.78, y: 0.58 },   // mid-right
+    { x: 0.42, y: 0.82 },   // bottom-center
+  ];
+  const fw = 70, fh = 65, pad = 10;
+  icons.forEach((el, i) => {
+    const s = slots[i % slots.length];
+    let x = s.x * sw;
+    let y = s.y * sh;
+    x = Math.min(Math.max(x, pad), sw - fw - pad);
+    y = Math.min(Math.max(y, pad), sh - fh - pad);
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    el.style.position = 'absolute';
+  });
+}
+
+layout();
+window.addEventListener('resize', layout);
+
+// ─────────────────────────────────
+//  BOOK DATA
+// ─────────────────────────────────
+const BOOKS = {
+  experience: {
+    title: 'Experience', color: '#e8c84a',
+    html: `
+      <div class="entry">
+        <div class="e-head"><div><div class="e-title">Advisory Systems Engineer</div><div class="e-sub">Arista Networks</div></div><div class="e-date">Dec 2025 – Present</div></div>
+        <div class="e-body"><ul>
+          <li>Design & develop production dashboards and observability workflows for large-scale enterprise environments using Arista Query Language (AQL)</li>
+          <li>Contribute to architecture of reusable components across CloudVision Studio, AVD, and automation tooling</li>
+          <li>Debug distributed system failures, performance bottlenecks, and telemetry pipelines cross-functionally</li>
+        </ul></div>
+      </div>
+      <div class="entry">
+        <div class="e-head"><div><div class="e-title">Advanced Services Engineer</div><div class="e-sub">Arista Networks — Customer Engineering</div></div><div class="e-date">Feb – Dec 2025</div></div>
+        <div class="e-body"><ul>
+          <li>Built custom analytics dashboards and microservice workflows within CloudVision Portal</li>
+          <li>Debugged distributed system failures and telemetry ingestion issues in production environments</li>
+          <li>Designed reusable automation components to improve observability across teams</li>
+        </ul></div>
+      </div>
+      <div class="entry">
+        <div class="e-head"><div><div class="e-title">Teaching Assistant — Network Security</div><div class="e-sub">New York University</div></div><div class="e-date">Sep – Dec 2024</div></div>
+        <div class="e-body"><ul>
+          <li>Mentored grad students on secure systems design, cryptography, and network defense</li>
+          <li>Conducted code reviews, debugging sessions, and architecture walkthroughs</li>
+        </ul></div>
+      </div>
+      <div class="entry">
+        <div class="e-head"><div><div class="e-title">Summer Intern — Advanced Service Engineering</div><div class="e-sub">Arista Networks</div></div><div class="e-date">May – Aug 2024</div></div>
+        <div class="e-body"><ul>
+          <li>Developed custom AQL dashboards for large-scale CloudVision deployments</li>
+          <li>Built data pipelines visualizing network telemetry across millions of data points</li>
+          <li>Delivered production-ready monitoring tools adopted across internal teams</li>
+        </ul></div>
+      </div>
+      <div class="entry">
+        <div class="e-head"><div><div class="e-title">Product Intern — Cloud Technology</div><div class="e-sub">Adobe</div></div><div class="e-date">May – Aug 2022</div></div>
+        <div class="e-body"><ul>
+          <li>Automated Unit & Integration testing, reducing testing time by 25% and post-release defects by 15%</li>
+          <li>Developed a tailored testing framework improving overall testing speed by 30%</li>
+        </ul></div>
+      </div>`
+  },
+  education: {
+    title: 'Education', color: '#8ab4c9',
+    html: `
+      <div class="entry">
+        <div class="e-head"><div><div class="e-title">MS in Computer Science</div><div class="e-sub">New York University</div></div><div class="e-date">Dec 2024</div></div>
+        <div class="e-body">GPA: 3.89 / 4.0<ul>
+          <li>Artificial Intelligence, Information Visualization, Design & Analysis of Algorithms, Big Data, Java</li>
+          <li>Womentorship Program — Student Coordinator · Girls Who Code — Mentorship Lead</li>
+        </ul></div>
+      </div>
+      <div class="entry">
+        <div class="e-head"><div><div class="e-title">BE in Computer Science</div><div class="e-sub">Anna University</div></div><div class="e-date">Jul 2023</div></div>
+        <div class="e-body">GPA: 9.27 / 10<ul>
+          <li>Machine Learning, Image Processing, Unix Internals, DBMS, Cloud Computing, IoT, Software Engineering</li>
+          <li>Computer Society of MIT — Head of Design & Media</li>
+        </ul></div>
+      </div>`
+  },
+  skills: {
+    title: 'Skills', color: '#8fa87a',
+    html: `
+      <div class="entry">
+        <div class="e-title" style="margin-bottom:12px">Languages</div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Java</span><span class="tag">C++</span><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Spark</span><span class="tag">CloudVision AQL</span></div>
+      </div>
+      <div class="entry">
+        <div class="e-title" style="margin-bottom:12px">Tools & Platforms</div>
+        <div class="tags"><span class="tag">Figma</span><span class="tag">Adobe XD</span><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">VS Code</span><span class="tag">Eclipse</span><span class="tag">Jira</span><span class="tag">Unity</span></div>
+      </div>
+      <div class="entry">
+        <div class="e-title" style="margin-bottom:12px">Domain Knowledge</div>
+        <div class="tags"><span class="tag">Distributed Systems</span><span class="tag">Network Security</span><span class="tag">Telemetry & Observability</span><span class="tag">Data Pipelines</span><span class="tag">Microservices</span><span class="tag">UI/UX Design</span></div>
+      </div>`
+  },
+  projects: {
+    title: 'Projects', color: '#d98080',
+    html: `
+      <div class="entry">
+        <div class="e-head"><div><div class="e-title">Hyperspectral Image Security via LAB Encryption</div><div class="e-sub">Python</div></div></div>
+        <div class="e-body"><ul>
+          <li>Proposed an innovative encryption algorithm for securing hyperspectral images in the CIELAB color space</li>
+          <li>Bolstered data security and confidentiality by ~18%</li>
+        </ul></div>
+      </div>
+      <div class="entry">
+        <div class="e-head"><div><div class="e-title">Secure Smart Cabin Using Arduino GSM Interface</div><div class="e-sub">Arduino / IoT</div></div></div>
+        <div class="e-body"><ul>
+          <li>Engineered an IoT-based office monitoring system using Arduino GSM interface</li>
+          <li>Built a custom dashboard for real-time data analysis, enhancing security and operational efficiency</li>
+        </ul></div>
+      </div>`
+  },
+  involvement: {
+    title: 'Involvement', color: '#c8b89a',
+    html: `
+      <div class="entry">
+        <div class="e-head"><div><div class="e-title">Womentorship Program</div><div class="e-sub">NYU — Student Coordinator</div></div></div>
+        <div class="e-body">Coordinated mentorship connections between students and industry professionals in STEM fields.</div>
+      </div>
+      <div class="entry">
+        <div class="e-head"><div><div class="e-title">Girls Who Code</div><div class="e-sub">NYU — Mentorship Lead</div></div></div>
+        <div class="e-body">Led mentorship initiatives supporting women entering computer science careers.</div>
+      </div>
+      <div class="entry">
+        <div class="e-head"><div><div class="e-title">Computer Society of MIT</div><div class="e-sub">Anna University — Head of Design & Media</div></div></div>
+        <div class="e-body">Led design and media output for society events and publications across semesters.</div>
+      </div>`
+  },
+  contact: {
+    title: 'Contact', color: '#a898c0',
+    html: `
+      <div class="entry">
+        <div class="e-body" style="display:flex;flex-direction:column;gap:20px">
+          <div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:3px">Email</div>
+            <a href="mailto:ramyaaprasath13@gmail.com" style="font-size:15px;color:var(--text);text-decoration:none">ramyaaprasath13@gmail.com</a></div>
+          <div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:3px">Phone</div>
+            <span style="font-size:15px">917-940-6958</span></div>
+          <div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:3px">LinkedIn</div>
+            <a href="https://linkedin.com/in/ramyaaprasath" target="_blank" style="font-size:15px;color:var(--text);text-decoration:none">linkedin.com/in/ramyaaprasath</a></div>
+          <div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:3px">Figma</div>
+            <a href="https://figma.com/@ramyaaprasath" target="_blank" style="font-size:15px;color:var(--text);text-decoration:none">figma.com/@ramyaaprasath</a></div>
+          <div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:3px">Location</div>
+            <span style="font-size:15px">New York / New Jersey</span></div>
+        </div>
+      </div>`
+  }
+};
+
+function openBook(key) {
+  const d = BOOKS[key];
+  document.getElementById('bkDot').style.background = d.color;
+  document.getElementById('bkTitle').textContent = d.title;
+  document.getElementById('bkBody').innerHTML = d.html;
+  document.getElementById('overlay').classList.add('open');
+}
+
+function closeBook() {
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function bgClose(e) {
+  if (e.target === document.getElementById('overlay')) closeBook();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBook(); });
+</script>
+</body>
+</html>
